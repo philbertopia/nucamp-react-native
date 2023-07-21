@@ -1,4 +1,5 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { FlatList, StyleSheet, Text, View, Button, Modal } from 'react-native';
 import RenderCampsite from '../features/campsites/RenderCampsite';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
@@ -9,6 +10,8 @@ const CampsiteInfoScreen = ({ route }) => {
     const comments = useSelector((state) => state.comments);
     const favorites = useSelector((state) => state.favorites);
     const dispatch = useDispatch();
+
+    const [showModal, setShowModal] = useState('false')
 
     const renderCommentItem = ({ item }) => {
         return (
@@ -38,6 +41,7 @@ const CampsiteInfoScreen = ({ route }) => {
                         markFavorite={() => 
                             dispatch(toggleFavorite(campsite.id))
                         }
+                        onShowModal={() => setShowModal(!showModal)}
                     />
                     <Text style={styles.commentsTitle}>Comments</Text>
                 </>
