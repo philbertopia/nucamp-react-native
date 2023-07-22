@@ -35,7 +35,7 @@ const RenderCampsite = (props) => {
                         }
                     />
                     <Icon 
-                        name={'pencil'}
+                        name='pencil'
                         color='#5637DD' 
                         raised
                         reverse
