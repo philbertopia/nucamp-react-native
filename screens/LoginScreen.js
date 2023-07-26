@@ -31,7 +31,9 @@ const LoginScreen = () => {
         SecureStore.getItemAsync('userinfo').then((userdata) => {
             const userinfo = JSON.parse(userdata);
             if (userinfo) {
-
+                setUsername(userinfo.username);
+                setPassword(userinfo.password);
+                setRemember(true);
             }
         })
     }, []);
