@@ -1,14 +1,25 @@
 import { useState } from 'react';
-import { Text, View, ScrollView, StyleSheet, Switch, Button, Modal } from 'react-native';
+import { 
+    Text, 
+    View, 
+    ScrollView, 
+    StyleSheet, 
+    Switch, 
+    Button, 
+    Alert,
+    // Modal 
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import * as Animatable from 'react-native-animatable';
+
 
 const ReservationScreen = () => {
     const [campers, setCampers] = useState(1);
     const [hikeIn, setHikeIn] = useState(false);
     const [date, setDate] = useState(new Date());
     const [showCalendar, setShowCalendar] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    // const [showModal, setShowModal] = useState(false);
 
     const onDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -17,10 +28,27 @@ const ReservationScreen = () => {
     }
     
     const handleReservation = () => {
-        console.log('campers', campers);
-        console.log('hikeIn', hikeIn);
-        console.log('date', date);
-        setShowModal(!showModal);
+        // Show an Alert dialog with the form values
+        Alert.alert(
+            'Confirm Reservation',
+            `Number of Campers: ${campers}\nHike-In: ${hikeIn ? 'Yes' : 'No'}\nDate: ${date.toLocaleDateString('en-US')}`,
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                    onPress: resetForm,
+                },
+                {
+                    text: 'OK',
+                    onPress: resetForm,
+                },
+            ],
+            { cancelable: false }
+        );
+        // console.log('campers', campers);
+        // console.log('hikeIn', hikeIn);
+        // console.log('date', date);
+        // setShowModal(!showModal);
     }
 
     const resetForm = () => {
@@ -32,6 +60,11 @@ const ReservationScreen = () => {
 
     return (
         <ScrollView>
+            <Animatable.View 
+                animation="zoomIn"
+                duration={2000}
+                delay={1000}
+            >
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Number of Campers:</Text>
                 <Picker
@@ -82,7 +115,9 @@ const ReservationScreen = () => {
                     accessibilityLabel='Tap me to search for available campsites to reserve'
                 />
             </View>
-            <Modal
+            </Animatable.View>
+
+            {/* <Modal
                 animationType='slide'
                 transparent={false}
                 visible={showModal}
@@ -110,7 +145,8 @@ const ReservationScreen = () => {
                         title='close'
                     />
                 </View>
-            </Modal>
+            </Modal> */}
+            
         </ScrollView>
     )
 }
